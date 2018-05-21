@@ -1,0 +1,25 @@
+{{extend 'layout.html'}}
+
+{{block head}}
+<script src="{{=URL('static', 'js/vue.js')}}"></script>
+<script>
+    var my_url = "{{=URL('api', 'my_method')}}";
+</script>
+{{end}}
+
+<div class="main_content">
+
+    <h1 class="layout_test">This is for selecting the type of animal</h1>
+
+    <div class="select_btn">
+        <a class="btn fuchsia rounded" href="{{=URL('default', 'cute_animals')}}"><i class="fa fa-paw"></i> Cute Animals</a>
+        <a class="btn lime rounded" href="{{=URL('default', 'ugly_animals')}}"><i class="fa fa-bug"></i> Ugly Animals</a>
+    </div>
+    
+    <div id="vue-div" class="display:none">
+        <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
+    </div>
+
+</div>
+
+<script src="{{=URL('static', 'js/default_index.js')}}"></script>
