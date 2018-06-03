@@ -3,14 +3,14 @@
   padding: 10px;
 }
 
-.select_btn {
-  padding: 5px;
-}
-
 .front_page_img {
   padding: 10px;
 }
 
 .idontknow {
   padding: 10px;
+}
+
+.button_padding {
+  margin-left: 10px;
 }

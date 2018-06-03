@@ -8,18 +8,21 @@
 {{end}}
 
 <div class="main_content">
+    <div class = "container padded">
+        <div id="vue-div" class="display:none">
+            <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
+            <h1 class="layout_test">This is for selecting the type of animal</h1>
 
-    <h1 class="layout_test">This is for selecting the type of animal</h1>
-
-    <div class="select_btn">
-        <a class="btn fuchsia rounded" href="{{=URL('default', 'cute_animals')}}"><i class="fa fa-paw"></i> Cute Animals</a>
-        <a class="btn lime rounded" href="{{=URL('default', 'ugly_animals')}}"><i class="fa fa-bug"></i> Ugly Animals</a>
+            <div v-if="self_page">
+                <!-- Code to upload files, with control buttons -->
+                <div id="uploader_div" style="display:none">
+                    Upload an image file: <input id="file_input" type="file" v-on:change="upload_file" accept="image/jpeg">
+                </div>
+                    <button v-if="!is_uploading" v-on:click="open_uploader" ><i class="fa fa-plus"></i></button>
+                    <button v-if="is_uploading"  v-on:click="close_uploader">Cancel</button>
+            </div>
+        </div>
     </div>
-    
-    <div id="vue-div" class="display:none">
-        <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
-    </div>
-
 </div>
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>
