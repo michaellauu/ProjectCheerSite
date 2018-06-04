@@ -6,7 +6,19 @@
 #       'date','time','datetime','blob','upload', 'reference TABLENAME'
 # There is an implicit 'id integer autoincrement' field
 # Consult manual for more options, validators, etc.
+import datetime
 
+def get_user_email():
+    return auth.user.email if auth.user else None
+
+
+db.define_table('user_images',
+                Field('user_email', default=get_user_email()),
+                Field('created_by', 'reference auth_user', default=auth.user_id),
+                Field('created_on', 'datetime', default=request.now),
+                Field('image_url'),
+				Field('upvotes', 'integer', default=0)
+                )
 
 
 
