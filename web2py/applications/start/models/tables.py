@@ -6,11 +6,14 @@
 #       'date','time','datetime','blob','upload', 'reference TABLENAME'
 # There is an implicit 'id integer autoincrement' field
 # Consult manual for more options, validators, etc.
+from gluon.tools import Auth, Crud, Service, PluginManager, prettydate
+auth = Auth(db, hmac_key=Auth.get_or_create_key())
+crud, service, plugins = Crud(db), Service(), PluginManager()
+
 import datetime
 
 def get_user_email():
     return auth.user.email if auth.user else None
-
 
 db.define_table('user_images',
                 Field('user_email', default=get_user_email()),
@@ -20,6 +23,11 @@ db.define_table('user_images',
 				Field('upvotes', 'integer', default=0)
                 )
 
+#test fields
+auth.settings.extra_fields['auth_user']= [
+  Field('favorites')
+  ]
+auth.define_tables(username=True, signature=False,migrate=True)
 
 
 # after defining tables, uncomment below to enable auditing
