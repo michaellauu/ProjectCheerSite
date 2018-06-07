@@ -64,3 +64,13 @@ CREATE TABLE "auth_cas"(
     "renew" CHAR(1)
 );
 success!
+timestamp: 2018-06-07T13:42:55.563049
+CREATE TABLE "user_images"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_email" CHAR(512),
+    "created_by" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "created_on" TIMESTAMP,
+    "image_url" CHAR(512),
+    "upvotes" INTEGER
+);
+success!

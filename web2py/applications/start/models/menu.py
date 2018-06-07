@@ -50,10 +50,7 @@ def _():
     # ------------------------------------------------------------------------------------------------------------------
     response.menu += [
         (T('My Sites'), False, URL('admin', 'default', 'site')),
-        (T('Animals'), False, URL('default', 'animal_select'), [
-            (T('Cute Animals'), False, URL('default', 'cute_animals')),
-            (T('Ugly Animals'), False, URL('default', 'ugly_animals')),
-        ]),
+        (T('Animals'), False, URL('default', 'animal_select')),
         (T('Sample Menu 2'), False, URL('default', 'index'))
     ]
 
