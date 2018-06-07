@@ -3,7 +3,10 @@
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
-    var my_url = "{{=URL('api', 'my_method')}}";
+    var images_url = "{{=URL('api', 'get_images')}}";
+    var get_user_url = "{{=URL('api', 'get_user')}}";
+    var add_image_url = "{{=URL('api', 'add_image', user_signature=True)}}";
+    var del_image_url = "{{=URL('api', 'del_image', user_signature=True)}}";
 </script>
 {{end}}
 
@@ -21,7 +24,38 @@
                     <button v-if="!is_uploading" v-on:click="open_uploader" ><i class="fa fa-plus"></i></button>
                     <button v-if="is_uploading"  v-on:click="close_uploader">Cancel</button>
             </div>
+
+            <div class="image_container">
+                <!-- Put here the code to display the images -->
+                <ul class="container">
+                  <li v-for="image in images" class="card padded quarter lifted image_container_css">
+                    <img v-bind:src="image.image_url" height="200px" width="200px" class="padded"/>
+                    <button class="right rounded orange" v-on:click="delete_images(image._idx)"> <i class="fa fa-trash"></i></button>
+                    <button class="rounded green"> <i class="fa fa-angle-double-up fa-lg"></i></button>
+                    <button class="rounded red"> <i class="fa fa-angle-double-down fa-lg"></i></button>
+                    <button class="rounded fuchsia"> <i class="fa fa-heart-o"></i></button>
+                    <button class="rounded fuchsia"> <i class="fa fa-heart"></i></button>
+                  </li>
+                </ul>
+            </div>
+    
+            <div class="user_space quarter right">
+                <!-- Right part of the page -->
+                <table class="fill" id="user_selector">
+                    <tbody>
+                        <tr class="center" style="margin-left:70px; margin-right:70px;margin-top:200px">
+                            <!-- This row is you; code for getting your own images, and for setting self_page -->
+                            <td style="text-align:center;">ANIMALS</td>
+                        </tr>
+                      <!-- Then, one row for each person. -->
+                    </tbody>
+                </table>
+    
+            </div>
+
         </div>
+
+        
     </div>
 </div>
 

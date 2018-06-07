@@ -20,15 +20,17 @@ db.define_table('user_images',
                 Field('created_by', 'reference auth_user', default=auth.user_id),
                 Field('created_on', 'datetime', default=request.now),
                 Field('image_url'),
-				Field('upvotes', 'integer', default=0)
+				Field('upvotes', 'integer', default=0),
+                Field('downvotes', 'integer', default=0)
                 )
 
-#test fields
-auth.settings.extra_fields['auth_user']= [
-  Field('favorites')
-  ]
-auth.define_tables(username=True, signature=False,migrate=True)
-
+db.define_table('rating',
+                Field('user_id', db.auth_user, default=auth.user_id),
+                Field('image_id', 'integer'),
+                Field('favorited', 'boolean', default=False),
+                Field('upvote', 'boolean', default=False),
+                Field('downvote', 'boolean', default=False),
+                )
 
 # after defining tables, uncomment below to enable auditing
 # auth.enable_record_versioning(db)

@@ -74,3 +74,16 @@ CREATE TABLE "user_images"(
     "upvotes" INTEGER
 );
 success!
+timestamp: 2018-06-07T14:48:29.802645
+ALTER TABLE "user_images" ADD "downvotes" INTEGER;
+success!
+timestamp: 2018-06-07T14:48:29.892583
+CREATE TABLE "rating"(
+    "id" INTEGER PRIMARY KEY AUTOINCREMENT,
+    "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
+    "image_id" INTEGER,
+    "favorited" CHAR(1),
+    "upvote" CHAR(1),
+    "downvote" CHAR(1)
+);
+success!
