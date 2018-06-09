@@ -19,7 +19,19 @@ def add_image():
 def get_images():
     current_id = int(request.vars.current_id) if request.vars.current_id is not None else 0
     images = []
+    ratings = []
+    rate = db().select(db.ratings.ALL)
     img = db().select(db.user_images.ALL)
+    for i in rate:
+        if i.user_id == current_id:
+            ra = dict (
+                id = i.user_id,
+                image_id = i.image_id,
+                favorited = i.favorited,
+                upvote = i.upvote,
+                downvote = i.downvote
+            )
+            ratings.append(ra)
     for r in img:
         if r.created_by == current_id:
             t = dict(
@@ -37,6 +49,7 @@ def get_images():
         user_id = 0
     return response.json(dict(
         images = images,
+        ratings = ratings,
         user_id = user_id,
     ))
 
@@ -71,6 +84,24 @@ def get_user():
 def del_image():
     db(db.user_images.id == request.vars.id).delete()
     return "done"
+
+@auth.requires_signature()
+def toggle_favorite():
+    q = db.ratings(request.vars.image_id)
+    q.update_record(favorite = not q.favorite)
+    return "done"
+
+@auth.requires_signature()
+def add_favorite():
+    img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, favorited = True)
+    i = db.ratings(img_id)
+    return response.json(dict(image_data = dict(
+        id = i.user_id,
+        image_id = i.image_id,
+        favorited = i.favorited,
+        upvote = i.upvote,
+        downvote = i.downvote
+    )))
 # Here go your api methods.
 
 

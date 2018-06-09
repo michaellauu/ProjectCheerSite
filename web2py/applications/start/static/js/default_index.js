@@ -80,7 +80,9 @@ var app = function() {
 
     self.get_images = function(cuser){
         $.getJSON(get_image_url(cuser), function(data) {
+            console.log(data);
             self.vue.images = data.images;
+            self.vue.ratings = data.ratings;
             self.vue.self_id = data.user_id;
             if (data.user_id == 0) {
                 self.vue.self_page = false;
@@ -92,6 +94,7 @@ var app = function() {
                 self.vue.user_id = data.user_id;
             }
             enumerate(self.vue.images);
+            enumerate(self.vue.ratings);
         })
     };
 
@@ -136,9 +139,30 @@ var app = function() {
         })
     };
 
-    self.toggle_favorite = function() {
-        self.vue.favorite = !self.vue.favorite
-    }
+    self.toggle_favorite = function(index) {
+        var exist = false;
+        var img_id= 0;
+        current_id = self.vue.images[index].id;
+        for(i = 0; i < self.vue.ratings.length; i++) {
+            if(current_id == self.vue.ratings[i].image_id) {
+                var exist = true;
+                img_id = self.vue.ratings[i].image_id;
+            }
+        }
+        if (exist){
+            $.post(toggle_fav_url,
+                {
+                    image_id: img_id
+                },)
+        }
+        else {
+            $.post(add_fav_url,
+                {
+                    user_id: self.vue.self_id,
+                    image_id: img_id
+                })
+        }
+    };
 
     self.vue = new Vue({
         el: "#vue-div",
@@ -148,6 +172,7 @@ var app = function() {
             is_uploading: false,
             self_page: true, // Leave it to true, so initially you are looking at your own images.
             images: [],
+            ratings: [],
             users: [],
             user_id: 0,
             self_id: 0,
