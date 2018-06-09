@@ -136,6 +136,10 @@ var app = function() {
         })
     };
 
+    self.toggle_favorite = function() {
+        self.vue.favorite = !self.vue.favorite
+    }
+
     self.vue = new Vue({
         el: "#vue-div",
         delimiters: ['${', '}'],
@@ -146,14 +150,16 @@ var app = function() {
             images: [],
             users: [],
             user_id: 0,
-            self_id: 0
+            self_id: 0,
+            favorite: false
         },
         methods: {
             open_uploader: self.open_uploader,
             close_uploader: self.close_uploader,
             upload_file: self.upload_file,
             select_user: self.select_user,
-            delete_images: self.delete_images
+            delete_images: self.delete_images,
+            toggle_favorite: self.toggle_favorite
         }
 
     });

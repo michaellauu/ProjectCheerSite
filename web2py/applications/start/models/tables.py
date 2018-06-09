@@ -24,7 +24,7 @@ db.define_table('user_images',
                 Field('downvotes', 'integer', default=0)
                 )
 
-db.define_table('rating',
+db.define_table('ratings',
                 Field('user_id', db.auth_user, default=auth.user_id),
                 Field('image_id', 'integer'),
                 Field('favorited', 'boolean', default=False),

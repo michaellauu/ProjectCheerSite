@@ -9,12 +9,12 @@
     var del_image_url = "{{=URL('api', 'del_image', user_signature=True)}}";
 </script>
 {{end}}
-
+<main class= "aqua">
 <div class="main_content">
     <div class = "container padded">
         <div id="vue-div" class="display:none">
             <!-- Your code goes here.  Remember to call $("#vue-div").show() once you get the data for the first time. -->
-            <h1 class="layout_test">This is for selecting the type of animal</h1>
+            <h3 class="layout_test">This is for selecting the type of animal</h3>
 
             <div v-if="self_page">
                 <!-- Code to upload files, with control buttons -->
@@ -25,27 +25,15 @@
                     <button v-if="is_uploading"  v-on:click="close_uploader">Cancel</button>
             </div>
 
-            <div class="image_container">
-                <!-- Put here the code to display the images -->
-                <ul class="container">
-                  <li v-for="image in images" class="card padded quarter lifted image_container_css">
-                    <img v-bind:src="image.image_url" height="200px" width="200px" class="padded"/>
-                    <button class="right rounded orange" v-on:click="delete_images(image._idx)"> <i class="fa fa-trash"></i></button>
-                    <button class="rounded green"> <i class="fa fa-angle-double-up fa-lg"></i></button>
-                    <button class="rounded red"> <i class="fa fa-angle-double-down fa-lg"></i></button>
-                    <button class="rounded fuchsia"> <i class="fa fa-heart-o"></i></button>
-                    <button class="rounded fuchsia"> <i class="fa fa-heart"></i></button>
-                  </li>
-                </ul>
-            </div>
-    
-            <div class="user_space quarter right">
+            <div class="user_space">
                 <!-- Right part of the page -->
                 <table class="fill" id="user_selector">
                     <tbody>
-                        <tr class="center" style="margin-left:70px; margin-right:70px;margin-top:200px">
+                        <tr class="center" style="margin-left:70px; margin-right:70px; margin-top:200px">
                             <!-- This row is you; code for getting your own images, and for setting self_page -->
-                            <td style="text-align:center;">ANIMALS</td>
+                            <td style="text-align:center; border: 1px solid black; background-color: pink; color: black;">ANIMALS</td>
+                            <td style="text-align:center; border: 1px solid black; background-color: pink; color: black;">ANIMALS</td>
+                            <td style="text-align:center; border: 1px solid black; background-color: pink; color: black;">ANIMALS</td>
                         </tr>
                       <!-- Then, one row for each person. -->
                     </tbody>
@@ -53,10 +41,26 @@
     
             </div>
 
+            <div class="image_container padded">
+                <!-- Put here the code to display the images -->
+                <ul class="container">
+                  <li v-for="image in images" class="card padded quarter image_container_css">
+                    <img v-bind:src="image.image_url" height="200px" width="200px" class="padded"/>
+                    <button class="right rounded green button_css"> <i class="fa fa-angle-double-up fa-lg"></i></button>
+                    <button class="right rounded red button_css"> <i class="fa fa-angle-double-down fa-lg"></i></button>
+                    <button v-if="!favorite" class="right rounded fuchsia button_css" v-on:click="toggle_favorite"> <i class="fa fa-heart-o"></i></button>
+                    <button v-if="favorite" class="right rounded fuchsia button_css" v-on:click="toggle_favorite"> <i class="fa fa-heart"></i></button>
+                    <button class="right rounded orange" v-on:click="delete_images(image._idx)"> <i class="fa fa-trash"></i></button>
+                    <h6 class="center">50 </h6>
+                  </li>
+                </ul>
+            </div>
+
         </div>
 
         
     </div>
 </div>
+</main>
 
 <script src="{{=URL('static', 'js/default_index.js')}}"></script>

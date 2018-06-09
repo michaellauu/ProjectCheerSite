@@ -163,3 +163,12 @@ div.table_footer span.pagine.disabled i.fa {
 div.butt{
     padding-left: 40%;
 }
+
+.image_container_css {
+  border: 1px solid black;
+  background-color: white;
+}
+
+.button_css {
+  margin-top: 5px;
+}
