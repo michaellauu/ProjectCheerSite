@@ -51,7 +51,7 @@
                     <img v-bind:src="image.image_url" height="200px" width="200px" class="padded"/>
                     <button class="right rounded green button_css"> <i class="fa fa-angle-double-up fa-lg"></i></button>
                     <button class="right rounded red button_css"> <i class="fa fa-angle-double-down fa-lg"></i></button>
-                    <button v-if="!favorite" class="right rounded fuchsia button_css" v-on:click="toggle_favorite"> <i class="fa fa-heart-o"></i></button>
+                    <button v-if="!favorite" class="right rounded fuchsia button_css" v-on:click="toggle_favorite(image._idx)"> <i class="fa fa-heart-o"></i></button>
                     <button v-if="favorite" class="right rounded fuchsia button_css" v-on:click="toggle_favorite"> <i class="fa fa-heart"></i></button>
                     <button class="right rounded orange" v-on:click="delete_images(image._idx)"> <i class="fa fa-trash"></i></button>
                     <h6 class="center">50 </h6>

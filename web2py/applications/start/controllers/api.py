@@ -88,7 +88,7 @@ def del_image():
 @auth.requires_signature()
 def toggle_favorite():
     q = db.ratings(request.vars.image_id)
-    q.update_record(favorite = not q.favorite)
+    q.update_record(favorited = not q.favorited)
     return "done"
 
 @auth.requires_signature()

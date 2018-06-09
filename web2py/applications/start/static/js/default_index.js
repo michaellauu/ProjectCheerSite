@@ -142,10 +142,12 @@ var app = function() {
     self.toggle_favorite = function(index) {
         var exist = false;
         var img_id= 0;
-        current_id = self.vue.images[index].id;
+        var current_id = self.vue.images[index].id;
         for(i = 0; i < self.vue.ratings.length; i++) {
+            console.log("WHY");
             if(current_id == self.vue.ratings[i].image_id) {
                 var exist = true;
+                console.log(exist);
                 img_id = self.vue.ratings[i].image_id;
             }
         }
@@ -153,13 +155,13 @@ var app = function() {
             $.post(toggle_fav_url,
                 {
                     image_id: img_id
-                },)
+                })
         }
         else {
             $.post(add_fav_url,
                 {
                     user_id: self.vue.self_id,
-                    image_id: img_id
+                    image_id: self.vue.images[index].id
                 })
         }
     };
