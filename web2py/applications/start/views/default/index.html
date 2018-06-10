@@ -3,8 +3,17 @@
 {{block head}}
 <script src="{{=URL('static', 'js/vue.js')}}"></script>
 <script>
-    var my_url = "{{=URL('api', 'my_method')}}";
     var images_url = "{{=URL('api', 'get_images')}}";
+    var get_user_url = "{{=URL('api', 'get_user')}}";
+    var add_image_url = "{{=URL('api', 'add_image', user_signature=True)}}";
+    var del_image_url = "{{=URL('api', 'del_image', user_signature=True)}}";
+    var toggle_fav_url = "{{=URL('api', 'toggle_favorite', user_signature=True)}}";
+    var add_fav_url = "{{=URL('api', 'add_favorite', user_signature=True)}}";
+    var toggle_up_url = "{{=URL('api', 'toggle_upvote', user_signature=True)}}";
+    var add_up_url = "{{=URL('api', 'add_upvote', user_signature=True)}}";
+    var toggle_down_url = "{{=URL('api', 'toggle_downvote', user_signature=True)}}";
+    var add_down_url = "{{=URL('api', 'add_down', user_signature=True)}}";
+    var get_ratings_url = "{{=URL('api', 'get_ratings', user_signature=True)}}";
 </script>
 {{end}}
 

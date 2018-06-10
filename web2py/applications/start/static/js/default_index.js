@@ -61,7 +61,8 @@ var app = function() {
         setTimeout(function() {
             $.post(add_image_url,
             {
-                image_url: get_url
+                image_url: get_url,
+                current_page: self.vue.current_page
             },
             function(data) {
             $.web2py.enableElement($("#add_image_url"));
@@ -72,18 +73,20 @@ var app = function() {
         }, 1000)
     };
 
-    function get_image_url(current_id) {
+    function get_image_url(current_id, current_page) {
         var pp = {
-            current_id: current_id
+            current_id: current_id,
+            current_page: current_page
         }
         return images_url + "?" + $.param(pp);
     }
 
-    self.get_images = function(cuser){
-        $.getJSON(get_image_url(cuser), function(data) {
+    self.get_images = function(cuser, cpage){
+        $.getJSON(get_image_url(cuser, cpage), function(data) {
             self.vue.images = data.images;
             self.vue.ratings = data.ratings;
             self.vue.self_id = data.user_id;
+            self.vue.logged_in = data.logged_in;
             if (data.user_id == 0) {
                 self.vue.self_page = false;
                 if (self.vue.users.length > 0) {
@@ -120,7 +123,7 @@ var app = function() {
                 }
                 enumerate(self.vue.users);
                 setTimeout(function() {
-                    self.get_images(self.vue.user_id);
+                    self.get_images(self.vue.user_id, self.vue.current_page);
                 }, 100);
             })
     };
@@ -151,14 +154,16 @@ var app = function() {
         if (exist){
             $.post(toggle_fav_url,
                 {
-                    image_id: img_id
+                    image_id: img_id,
+                    user_id: self.vue.self_id
                 })
         }
         else {
             $.post(add_fav_url,
                 {
                     user_id: self.vue.self_id,
-                    image_id: self.vue.images[index].id
+                    image_id: self.vue.images[index].id,
+                    image_url: self.vue.images[index].image_url
                 },
                 function(data) {
                     self.vue.ratings.push(data.favorite_data);
@@ -219,10 +224,11 @@ var app = function() {
             $.post(add_up_url,
                 {
                     user_id: self.vue.self_id,
-                    image_id: self.vue.images[index].id
+                    image_id: self.vue.images[index].id,
+                    image_url: self.vue.images[index].image_url
                 },
                 function(data) {
-                    self.vue.ratings.push(data.favorite_data);
+                    self.vue.ratings.push(data.upvote_data);
                     enumerate(self.vue.ratings);
                 })
         }
@@ -250,14 +256,25 @@ var app = function() {
             $.post(add_down_url,
                 {
                     user_id: self.vue.self_id,
-                    image_id: self.vue.images[index].id
+                    image_id: self.vue.images[index].id,
+                    image_url: self.vue.images[index].image_url
                 },
                 function(data) {
-                    self.vue.ratings.push(data.favorite_data);
+                    self.vue.ratings.push(data.downvote_data);
                     enumerate(self.vue.ratings);
                 })
         }
     };
+
+    self.select_page = function(change) {
+        self.vue.self_page = false;
+        self.vue.current_page = change;
+        self.get_images(self.vue.user_id, self.vue.current_page);
+    }
+
+    self.profile_page = function() {
+        self.vue.self_page = true;
+    }
 
     self.vue = new Vue({
         el: "#vue-div",
@@ -265,13 +282,14 @@ var app = function() {
         unsafeDelimiters: ['!{', '}'],
         data: {
             is_uploading: false,
-            self_page: true, // Leave it to true, so initially you are looking at your own images.
+            self_page: false, // Leave it to true, so initially you are looking at your own images.
             images: [],
             ratings: [],
             users: [],
             user_id: 0,
             self_id: 0,
-            favorite: false
+            current_page: 'ALL',
+            logged_in: false
         },
         methods: {
             open_uploader: self.open_uploader,
@@ -285,6 +303,8 @@ var app = function() {
             check_downvote: self.check_downvote,
             toggle_upvote: self.toggle_upvote,
             toggle_downvote: self.toggle_downvote,
+            select_page: self.select_page,
+            profile_page: self.profile_page
         }
 
     });

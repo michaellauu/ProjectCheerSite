@@ -5,7 +5,7 @@ from gluon.utils import web2py_uuid
 
 @auth.requires_signature()
 def add_image():
-    img_id = db.user_images.insert(image_url = request.vars.image_url)
+    img_id = db.user_images.insert(image_url = request.vars.image_url, category = request.vars.current_page)
     i = db.user_images(img_id)
     return response.json(dict(image_data = dict(
         id = i.id,
@@ -14,9 +14,10 @@ def add_image():
         image_url = i.image_url,
         upvotes = i.upvotes,
         downvotes = i.downvotes,
+        category = i.category
     )))
 
-def get_images():
+def get_imagesd():
     current_id = int(request.vars.current_id) if request.vars.current_id is not None else 0
     images = []
     ratings = []
@@ -27,6 +28,7 @@ def get_images():
             ra = dict (
                 id = i.user_id,
                 image_id = i.image_id,
+                image_url = i.image_url,
                 favorited = i.favorited,
                 upvote = i.upvote,
                 downvote = i.downvote
@@ -87,29 +89,39 @@ def del_image():
 
 @auth.requires_signature()
 def toggle_favorite():
-    q = db.ratings(request.vars.image_id)
-    q.update_record(favorited = not q.favorited)
+    image_id = int(request.vars.image_id) if request.vars.image_id is not None else 0
+    u = db(db.ratings.user_id == request.vars.user_id).select()
+    for i in u:
+        if i.image_id == image_id:
+            i.update_record(favorited = not i.favorited)
     return "done"
 
 @auth.requires_signature()
 def toggle_upvote():
-    q = db.ratings(request.vars.image_id)
-    q.update_record(upvote = not q.upvote)
+    image_id = int(request.vars.image_id) if request.vars.image_id is not None else 0
+    u = db(db.ratings.user_id == request.vars.user_id).select()
+    for i in u:
+        if i.image_id == image_id:
+            i.update_record(upvote = not i.upvote)
     return "done"
 
 @auth.requires_signature()
 def toggle_downvote():
-    q = db.ratings(request.vars.image_id)
-    q.update_record(downvote = not q.downvote)
+    image_id = int(request.vars.image_id) if request.vars.image_id is not None else 0
+    u = db(db.ratings.user_id == request.vars.user_id).select()
+    for i in u:
+        if i.image_id == image_id:
+            i.update_record(downvote = not i.downvote)
     return "done"
 
 @auth.requires_signature()
 def add_favorite():
-    img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, favorited = True)
+    img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, favorited = True, image_url = request.vars.image_url)
     i = db.ratings(img_id)
     favorite_data = dict(
         id = i.user_id,
         image_id = i.image_id,
+        image_url = i.image_url,
         favorited = i.favorited,
         upvote = i.upvote,
         downvote = i.downvote
@@ -120,11 +132,12 @@ def add_favorite():
 
 @auth.requires_signature()
 def add_upvote():
-    img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, upvote = True)
+    img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, upvote = True, image_url = request.vars.image_url)
     i = db.ratings(img_id)
     upvote_data = dict(
         id = i.user_id,
         image_id = i.image_id,
+        image_url = i.image_url,
         favorited = i.favorited,
         upvote = i.upvote,
         downvote = i.downvote
@@ -135,11 +148,12 @@ def add_upvote():
 
 @auth.requires_signature()
 def add_downvote():
-    img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, downvote = True)
+    img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, downvote = True, image_url = request.vars.image_url)
     i = db.ratings(img_id)
     downvote_data = dict(
         id = i.user_id,
         image_id = i.image_id,
+        image_url = i.image_url,
         favorited = i.favorited,
         upvote = i.upvote,
         downvote = i.downvote
@@ -148,7 +162,58 @@ def add_downvote():
         downvote_data= downvote_data
     ))
 
-
+def get_images():
+    current_id = int(request.vars.current_id) if request.vars.current_id is not None else 0
+    current_page = str(request.vars.current_page) if request.vars.current_page is not None else 'ALL'
+    images = []
+    ratings = []
+    rate = db().select(db.ratings.ALL)
+    img = db().select(db.user_images.ALL)
+    for i in rate:
+        if i.user_id == current_id:
+            ra = dict (
+                id = i.user_id,
+                image_id = i.image_id,
+                image_url = i.image_url,
+                favorited = i.favorited,
+                upvote = i.upvote,
+                downvote = i.downvote
+            )
+            ratings.append(ra)
+    for r in img:
+        if r.category == current_page:
+            t = dict(
+                id = r.id,
+                created_on = r.created_on,
+                created_by = r.created_by,
+                image_url = r.image_url,
+                upvotes= r.upvotes,
+                downvotes=r.downvotes,
+                category = r.category
+            )
+            images.append(t)
+        elif current_page == 'ALL':
+            t = dict(
+                id = r.id,
+                created_on = r.created_on,
+                created_by = r.created_by,
+                image_url = r.image_url,
+                upvotes= r.upvotes,
+                downvotes=r.downvotes,
+                category = r.category
+            )
+            images.append(t)
+    if (auth.user_id is not None):
+        user_id = auth.user_id
+    else:
+        user_id = 0
+    logged_in = auth.user is not None
+    return response.json(dict(
+        images = images,
+        ratings = ratings,
+        logged_in = logged_in,
+        user_id = user_id,
+    ))
 # Here go your api methods.
 
 

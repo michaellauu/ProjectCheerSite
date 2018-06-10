@@ -1,4 +1,4 @@
-timestamp: 2018-06-09T20:39:19.722000
+timestamp: 2018-06-09T23:54:09.613124
 CREATE TABLE "web2py_session_start"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "locked" CHAR(1),
@@ -9,7 +9,7 @@ CREATE TABLE "web2py_session_start"(
     "session_data" BLOB
 );
 success!
-timestamp: 2018-06-09T20:39:19.734000
+timestamp: 2018-06-09T23:54:09.820185
 CREATE TABLE "auth_user"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "first_name" CHAR(128),
@@ -21,21 +21,21 @@ CREATE TABLE "auth_user"(
     "registration_id" CHAR(512)
 );
 success!
-timestamp: 2018-06-09T20:39:19.742000
+timestamp: 2018-06-09T23:54:09.920738
 CREATE TABLE "auth_group"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "role" CHAR(512),
     "description" TEXT
 );
 success!
-timestamp: 2018-06-09T20:39:19.748000
+timestamp: 2018-06-09T23:54:09.962076
 CREATE TABLE "auth_membership"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
     "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  
 );
 success!
-timestamp: 2018-06-09T20:39:19.753000
+timestamp: 2018-06-09T23:54:10.071024
 CREATE TABLE "auth_permission"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "group_id" INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  ,
@@ -44,7 +44,7 @@ CREATE TABLE "auth_permission"(
     "record_id" INTEGER
 );
 success!
-timestamp: 2018-06-09T20:39:19.759000
+timestamp: 2018-06-09T23:54:10.149030
 CREATE TABLE "auth_event"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "time_stamp" TIMESTAMP,
@@ -54,7 +54,7 @@ CREATE TABLE "auth_event"(
     "description" TEXT
 );
 success!
-timestamp: 2018-06-09T20:39:19.765000
+timestamp: 2018-06-09T23:54:10.204415
 CREATE TABLE "auth_cas"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
@@ -64,7 +64,7 @@ CREATE TABLE "auth_cas"(
     "renew" CHAR(1)
 );
 success!
-timestamp: 2018-06-09T20:39:19.774000
+timestamp: 2018-06-09T23:54:10.247337
 CREATE TABLE "user_images"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_email" CHAR(512),
@@ -72,10 +72,11 @@ CREATE TABLE "user_images"(
     "created_on" TIMESTAMP,
     "image_url" CHAR(512),
     "upvotes" INTEGER,
-    "downvotes" INTEGER
+    "downvotes" INTEGER,
+    "category" CHAR(512)
 );
 success!
-timestamp: 2018-06-09T20:39:19.781000
+timestamp: 2018-06-09T23:54:10.296899
 CREATE TABLE "ratings"(
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
     "user_id" INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  ,
@@ -85,6 +86,6 @@ CREATE TABLE "ratings"(
     "downvote" CHAR(1)
 );
 success!
-timestamp: 2018-06-09T21:12:32.261000
-ALTER TABLE "user_images" ADD "category" CHAR(512);
+timestamp: 2018-06-09T23:56:00.822086
+ALTER TABLE "ratings" ADD "image_url" CHAR(512);
 success!
