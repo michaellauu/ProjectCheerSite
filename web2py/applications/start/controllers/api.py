@@ -106,28 +106,6 @@ def add_favorite():
         favorite_data= favorite_data
     ))
 
-def get_ratings():
-    current_id = int(request.vars.current_id) if request.vars.current_id is not None else 0
-    ratings = []
-    rate = db().select(db.ratings.ALL)
-    for i in rate:
-        if i.user_id == current_id:
-            ra = dict (
-                id = i.user_id,
-                image_id = i.image_id,
-                favorited = i.favorited,
-                upvote = i.upvote,
-                downvote = i.downvote
-            )
-            ratings.append(ra)
-    if (auth.user_id is not None):
-        user_id = auth.user_id
-    else:
-        user_id = 0
-    return response.json(dict(
-        ratings = ratings,
-        user_id = user_id,
-    ))
 # Here go your api methods.
 
 
