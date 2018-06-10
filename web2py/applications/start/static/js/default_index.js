@@ -66,6 +66,7 @@ var app = function() {
             function(data) {
             $.web2py.enableElement($("#add_image_url"));
             self.vue.images.push(data.image_data);
+            self.get_images(self.vue.self_id);
             enumerate(self.vue.images);
             })
         }, 1000)
@@ -96,6 +97,7 @@ var app = function() {
             enumerate(self.vue.images);
             enumerate(self.vue.ratings);
         })
+        console.log("end of get images");
     };
 
     self.select_user = function(id) {
@@ -143,12 +145,15 @@ var app = function() {
         var exist = false;
         var img_id= 0;
         var current_id = self.vue.images[index].id;
+        
+        console.log("id " + current_id);
         for(i = 0; i < self.vue.ratings.length; i++) {
-            console.log("WHY");
+            console.log("WORK " + i);
+            console.log(current_id == self.vue.ratings[i].image_id)
             if(current_id == self.vue.ratings[i].image_id) {
-                var exist = true;
-                console.log(exist);
+                exist = true;
                 img_id = self.vue.ratings[i].image_id;
+                self.vue.ratings[i].favorited = !self.vue.ratings[i].favorited;
             }
         }
         if (exist){
@@ -162,9 +167,24 @@ var app = function() {
                 {
                     user_id: self.vue.self_id,
                     image_id: self.vue.images[index].id
+                },
+                function(data) {
+                    console.log(data);
+                    self.vue.ratings.push(data);
+                    enumerate(self.vue.ratings);
                 })
         }
     };
+
+    self.check_favorite = function(index) {
+        var current_id = self.vue.images[index].id;
+        for(i = 0; i < self.vue.ratings.length; i++) {
+            if(current_id == self.vue.ratings[i].image_id) {
+                return self.vue.ratings[i].favorited;
+            }
+        }
+        return false;
+    }
 
     self.vue = new Vue({
         el: "#vue-div",
@@ -186,7 +206,8 @@ var app = function() {
             upload_file: self.upload_file,
             select_user: self.select_user,
             delete_images: self.delete_images,
-            toggle_favorite: self.toggle_favorite
+            toggle_favorite: self.toggle_favorite,
+            check_favorite: self.check_favorite,
         }
 
     });
