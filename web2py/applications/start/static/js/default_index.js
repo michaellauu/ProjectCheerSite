@@ -66,7 +66,7 @@ var app = function() {
             function(data) {
             $.web2py.enableElement($("#add_image_url"));
             self.vue.images.push(data.image_data);
-            self.get_images(self.vue.self_id);
+            //self.get_images(self.vue.self_id);
             enumerate(self.vue.images);
             })
         }, 1000)
@@ -81,7 +81,6 @@ var app = function() {
 
     self.get_images = function(cuser){
         $.getJSON(get_image_url(cuser), function(data) {
-            console.log(data);
             self.vue.images = data.images;
             self.vue.ratings = data.ratings;
             self.vue.self_id = data.user_id;
@@ -97,13 +96,11 @@ var app = function() {
             enumerate(self.vue.images);
             enumerate(self.vue.ratings);
         })
-        console.log("end of get images");
     };
 
     self.select_user = function(id) {
         self.vue.user_id = id;
         self.vue.self_page = (id == self.vue.self_id);
-        console.log(id);
         setTimeout(function() {
             self.get_images(self.vue.user_id);
         }, 100);
@@ -121,13 +118,11 @@ var app = function() {
                 else {
                     self.vue.user_id = data.user_id;
                 }
-                console.log("in get users " + self.vue.user_id);
                 enumerate(self.vue.users);
                 setTimeout(function() {
                     self.get_images(self.vue.user_id);
                 }, 100);
             })
-        console.log('called get user')
     };
 
     self.delete_images = function(index) {
@@ -146,10 +141,7 @@ var app = function() {
         var img_id= 0;
         var current_id = self.vue.images[index].id;
         
-        console.log("id " + current_id);
         for(i = 0; i < self.vue.ratings.length; i++) {
-            console.log("WORK " + i);
-            console.log(current_id == self.vue.ratings[i].image_id)
             if(current_id == self.vue.ratings[i].image_id) {
                 exist = true;
                 img_id = self.vue.ratings[i].image_id;
@@ -169,8 +161,7 @@ var app = function() {
                     image_id: self.vue.images[index].id
                 },
                 function(data) {
-                    console.log(data);
-                    self.vue.ratings.push(data);
+                    self.vue.ratings.push(data.favorite_data);
                     enumerate(self.vue.ratings);
                 })
         }

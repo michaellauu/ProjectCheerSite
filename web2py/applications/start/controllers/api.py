@@ -95,13 +95,16 @@ def toggle_favorite():
 def add_favorite():
     img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, favorited = True)
     i = db.ratings(img_id)
-    return response.json(dict(image_data = dict(
+    favorite_data = dict(
         id = i.user_id,
         image_id = i.image_id,
         favorited = i.favorited,
         upvote = i.upvote,
         downvote = i.downvote
-    )))
+    )
+    return response.json(dict(
+        favorite_data= favorite_data
+    ))
 
 def get_ratings():
     current_id = int(request.vars.current_id) if request.vars.current_id is not None else 0
