@@ -163,12 +163,13 @@ div.table_footer span.pagine.disabled i.fa {
 div.butt{
     padding-left: 40%;
 }
-
+/* change this */
 .image_container_css {
   border: 1px solid black;
   background-color: white;
+  width: 15%;
 }
 
-.button_css {
-  margin-top: 5px;
+ul.buttons {
+float: left;
 }

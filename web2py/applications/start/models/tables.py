@@ -21,7 +21,8 @@ db.define_table('user_images',
                 Field('created_on', 'datetime', default=request.now),
                 Field('image_url'),
 				Field('upvotes', 'integer', default=0),
-                Field('downvotes', 'integer', default=0)
+                Field('downvotes', 'integer', default=0),
+                Field('category'),
                 )
 
 db.define_table('ratings',

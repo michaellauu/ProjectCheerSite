@@ -92,6 +92,18 @@ def toggle_favorite():
     return "done"
 
 @auth.requires_signature()
+def toggle_upvote():
+    q = db.ratings(request.vars.image_id)
+    q.update_record(upvote = not q.upvote)
+    return "done"
+
+@auth.requires_signature()
+def toggle_downvote():
+    q = db.ratings(request.vars.image_id)
+    q.update_record(downvote = not q.downvote)
+    return "done"
+
+@auth.requires_signature()
 def add_favorite():
     img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, favorited = True)
     i = db.ratings(img_id)
@@ -105,6 +117,37 @@ def add_favorite():
     return response.json(dict(
         favorite_data= favorite_data
     ))
+
+@auth.requires_signature()
+def add_upvote():
+    img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, upvote = True)
+    i = db.ratings(img_id)
+    upvote_data = dict(
+        id = i.user_id,
+        image_id = i.image_id,
+        favorited = i.favorited,
+        upvote = i.upvote,
+        downvote = i.downvote
+    )
+    return response.json(dict(
+        upvote_data= upvote_data
+    ))
+
+@auth.requires_signature()
+def add_downvote():
+    img_id = db.ratings.insert(user_id = request.vars.user_id, image_id = request.vars.image_id, downvote = True)
+    i = db.ratings(img_id)
+    downvote_data = dict(
+        id = i.user_id,
+        image_id = i.image_id,
+        favorited = i.favorited,
+        upvote = i.upvote,
+        downvote = i.downvote
+    )
+    return response.json(dict(
+        downvote_data= downvote_data
+    ))
+
 
 # Here go your api methods.
 

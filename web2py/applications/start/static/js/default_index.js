@@ -177,6 +177,88 @@ var app = function() {
         return false;
     }
 
+    self.check_upvote = function(index) {
+        var current_id = self.vue.images[index].id;
+        for(i = 0; i < self.vue.ratings.length; i++) {
+            if(current_id == self.vue.ratings[i].image_id) {
+                return self.vue.ratings[i].upvote;
+            }
+        }
+        return false;
+    }
+
+    self.check_downvote = function(index) {
+        var current_id = self.vue.images[index].id;
+        for(i = 0; i < self.vue.ratings.length; i++) {
+            if(current_id == self.vue.ratings[i].image_id) {
+                return self.vue.ratings[i].downvote;
+            }
+        }
+        return false;
+    }
+
+    self.toggle_upvote = function(index) {
+        var exist = false;
+        var img_id= 0;
+        var current_id = self.vue.images[index].id;
+
+        for(i = 0; i < self.vue.ratings.length; i++) {
+            if(current_id == self.vue.ratings[i].image_id) {
+                exist = true;
+                img_id = self.vue.ratings[i].image_id;
+                self.vue.ratings[i].upvote = !self.vue.ratings[i].upvote;
+            }
+        }
+        if (exist){
+            $.post(toggle_up_url,
+                {
+                    image_id: img_id
+                })
+        }
+        else {
+            $.post(add_up_url,
+                {
+                    user_id: self.vue.self_id,
+                    image_id: self.vue.images[index].id
+                },
+                function(data) {
+                    self.vue.ratings.push(data.favorite_data);
+                    enumerate(self.vue.ratings);
+                })
+        }
+    };
+
+    self.toggle_downvote = function(index) {
+        var exist = false;
+        var img_id= 0;
+        var current_id = self.vue.images[index].id;
+
+        for(i = 0; i < self.vue.ratings.length; i++) {
+            if(current_id == self.vue.ratings[i].image_id) {
+                exist = true;
+                img_id = self.vue.ratings[i].image_id;
+                self.vue.ratings[i].downvote = !self.vue.ratings[i].downvote;
+            }
+        }
+        if (exist){
+            $.post(toggle_down_url,
+                {
+                    image_id: img_id
+                })
+        }
+        else {
+            $.post(add_down_url,
+                {
+                    user_id: self.vue.self_id,
+                    image_id: self.vue.images[index].id
+                },
+                function(data) {
+                    self.vue.ratings.push(data.favorite_data);
+                    enumerate(self.vue.ratings);
+                })
+        }
+    };
+
     self.vue = new Vue({
         el: "#vue-div",
         delimiters: ['${', '}'],
@@ -199,6 +281,10 @@ var app = function() {
             delete_images: self.delete_images,
             toggle_favorite: self.toggle_favorite,
             check_favorite: self.check_favorite,
+            check_upvote: self.check_upvote,
+            check_downvote: self.check_downvote,
+            toggle_upvote: self.toggle_upvote,
+            toggle_downvote: self.toggle_downvote,
         }
 
     });

@@ -85,3 +85,6 @@ CREATE TABLE "ratings"(
     "downvote" CHAR(1)
 );
 success!
+timestamp: 2018-06-09T21:12:32.261000
+ALTER TABLE "user_images" ADD "category" CHAR(512);
+success!
