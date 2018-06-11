@@ -267,6 +267,12 @@ var app = function() {
                     id: self.vue.images[index].id,
                     upvote: self.vue.ratings[index].upvote,
                 })
+            if(self.vue.ratings[index].upvote == False) {
+                self.vue.images[index].upvotes = self.vue.images[index].upvotes - 1
+                }
+            if (self.vue.ratings[index].upvote == True) {
+                self.vue.images[index].upvotes = self.vue.images[index].upvotes + 1
+                }
         }
         else {
             $.post(add_up_url,
@@ -279,6 +285,7 @@ var app = function() {
                     self.vue.ratings.push(data.upvote_data);
                     enumerate(self.vue.ratings);
                 })
+            self.vue.images[index].upvotes = self.vue.images[index].upvotes + 1
         }
     };
 
@@ -302,6 +309,12 @@ var app = function() {
                     id: self.vue.images[index].id,
                     downvote: self.vue.ratings[index].downvote,
                 })
+            if(self.vue.ratings[index].upvote == False) {
+                self.vue.images[index].upvotes = self.vue.images[index].upvotes - 1
+                }
+            if (self.vue.ratings[index].upvote == True) {
+                self.vue.images[index].upvotes = self.vue.images[index].upvotes + 1
+                }
         }
         else {
             $.post(add_down_url,
@@ -314,6 +327,7 @@ var app = function() {
                     self.vue.ratings.push(data.downvote_data);
                     enumerate(self.vue.ratings);
                 })
+            self.vue.images[index].downvotes = self.vue.images[index].downvotes + 1
         }
     };
 

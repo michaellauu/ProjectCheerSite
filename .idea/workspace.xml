@@ -11,11 +11,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="api.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web2py/applications/start/controllers/api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="318">
-              <caret line="114" column="52" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
+            <state relative-caret-position="420">
+              <caret line="140" column="32" selection-start-line="140" selection-start-column="32" selection-end-line="140" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -25,11 +25,11 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file leaf-file-name="default_index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="default_index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web2py/applications/start/static/js/default_index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="742">
-              <caret line="302" column="52" selection-start-line="302" selection-start-column="52" selection-end-line="302" selection-end-column="52" />
+            <state relative-caret-position="793">
+              <caret line="330" column="9" lean-forward="true" selection-start-line="330" selection-start-column="9" selection-end-line="330" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -56,8 +56,8 @@
         <option value="$PROJECT_DIR$/web2py/applications/start/static/css/myapp.css" />
         <option value="$PROJECT_DIR$/web2py/applications/start/models/tables.py" />
         <option value="$PROJECT_DIR$/web2py/applications/start/views/default/animal_select.html" />
-        <option value="$PROJECT_DIR$/web2py/applications/start/static/js/default_index.js" />
         <option value="$PROJECT_DIR$/web2py/applications/start/controllers/api.py" />
+        <option value="$PROJECT_DIR$/web2py/applications/start/static/js/default_index.js" />
       </list>
     </option>
   </component>
@@ -222,20 +222,20 @@
     <entry file="file://$PROJECT_DIR$/web2py/applications/start/views/default/animal_select.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/web2py/applications/start/static/js/default_index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="742">
-          <caret line="302" column="52" selection-start-line="302" selection-start-column="52" selection-end-line="302" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web2py/applications/start/models/tables.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/web2py/applications/start/controllers/api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="318">
-          <caret line="114" column="52" selection-start-line="114" selection-start-column="52" selection-end-line="114" selection-end-column="52" />
+        <state relative-caret-position="420">
+          <caret line="140" column="32" selection-start-line="140" selection-start-column="32" selection-end-line="140" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web2py/applications/start/static/js/default_index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="793">
+          <caret line="330" column="9" lean-forward="true" selection-start-line="330" selection-start-column="9" selection-end-line="330" selection-end-column="9" />
         </state>
       </provider>
     </entry>
