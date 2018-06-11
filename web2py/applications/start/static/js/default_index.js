@@ -265,6 +265,7 @@ var app = function() {
                     image_id: img_id,
                     user_id: self.vue.self_id,
                     id: self.vue.images[index].id,
+                    upvote: self.vue.ratings[index].upvote,
                 })
         }
         else {
@@ -299,6 +300,7 @@ var app = function() {
                     image_id: img_id,
                     user_id: self.vue.self_id,
                     id: self.vue.images[index].id,
+                    downvote: self.vue.ratings[index].downvote,
                 })
         }
         else {

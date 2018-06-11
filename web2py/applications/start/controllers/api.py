@@ -107,7 +107,7 @@ def toggle_upvote():
     for i in u:
         if i.image_id == image_id:
             i.update_record(upvote = not i.upvote)
-    status = db.ratings(request.vars.upvote)
+    status = bool(request.vars.upvote)
     work = db.user_images(request.vars.id)
     if status is False:
         work.update_record(upvotes=work.upvotes-1)
@@ -122,7 +122,7 @@ def toggle_downvote():
     for i in u:
         if i.image_id == image_id:
             i.update_record(downvote = not i.downvote)
-    status = db.ratings(request.vars.downvote)
+    status = bool(request.vars.downvote)
     work = db.user_images(request.vars.id)
     if status is False:
         work.update_record(downvotes = work.downvotes-1)
