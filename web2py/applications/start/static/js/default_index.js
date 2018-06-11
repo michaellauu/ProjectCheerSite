@@ -263,7 +263,8 @@ var app = function() {
             $.post(toggle_up_url,
                 {
                     image_id: img_id,
-                    user_id: self.vue.self_id
+                    user_id: self.vue.self_id,
+                    id: self.vue.images[index].id,
                 })
         }
         else {
@@ -296,7 +297,8 @@ var app = function() {
             $.post(toggle_down_url,
                 {
                     image_id: img_id,
-                    user_id: self.vue.self_id
+                    user_id: self.vue.self_id,
+                    id: self.vue.images[index].id,
                 })
         }
         else {

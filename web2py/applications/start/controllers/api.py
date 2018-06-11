@@ -107,6 +107,12 @@ def toggle_upvote():
     for i in u:
         if i.image_id == image_id:
             i.update_record(upvote = not i.upvote)
+    status = db.ratings(request.vars.upvote)
+    work = db.user_images(request.vars.id)
+    if status is False:
+        work.update_record(upvotes=work.upvotes-1)
+    if status is True:
+        work.update_record(upvotes = work.upvotes+1)
     return "done"
 
 @auth.requires_signature()
@@ -116,6 +122,12 @@ def toggle_downvote():
     for i in u:
         if i.image_id == image_id:
             i.update_record(downvote = not i.downvote)
+    status = db.ratings(request.vars.downvote)
+    work = db.user_images(request.vars.id)
+    if status is False:
+        work.update_record(downvotes = work.downvotes-1)
+    if status is True:
+        work.update_record(downvotes = work.downvotes+1)
     return "done"
 
 @auth.requires_signature()
@@ -146,6 +158,8 @@ def add_upvote():
         upvote = i.upvote,
         downvote = i.downvote
     )
+    addup = db.user_images(request.vars.image_id)
+    addup.update_record(upvotes = addup.upvotes+1)
     return response.json(dict(
         upvote_data= upvote_data
     ))
@@ -162,6 +176,8 @@ def add_downvote():
         upvote = i.upvote,
         downvote = i.downvote
     )
+    adddown = db.user_images(request.vars.image_id)
+    adddown.update_record(downvotes = adddown.downvotes+1)
     return response.json(dict(
         downvote_data= downvote_data
     ))
