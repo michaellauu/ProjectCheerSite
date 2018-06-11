@@ -261,6 +261,7 @@ var app = function() {
         if (exist){
             if (self.vue.ratings[index].upvote == true && self.vue.ratings[index].downvote == true) {
                 self.vue.ratings[index].downvote = false;
+                self.vue.images[index].downvotes = self.vue.images[index].downvotes - 1;
             }
             $.post(toggle_up_url,
                 {
@@ -305,6 +306,7 @@ var app = function() {
         if (exist){
             if (self.vue.ratings[index].upvote == true && self.vue.ratings[index].downvote == true) {
                 self.vue.ratings[index].upvote = false;
+                self.vue.images[index].upvotes = self.vue.images[index].upvotes - 1;
             }
             $.post(toggle_down_url,
                 {
@@ -313,11 +315,11 @@ var app = function() {
                     id: self.vue.images[index].id,
                     downvote: self.vue.ratings[index].downvote,
                 })
-            if(self.vue.ratings[index].upvote == false) {
-                self.vue.images[index].upvotes = self.vue.images[index].upvotes - 1;
+            if(self.vue.ratings[index].downvote == false) {
+                self.vue.images[index].downvotes = self.vue.images[index].downvotes - 1;
                 }
-            if (self.vue.ratings[index].upvote == true) {
-                self.vue.images[index].upvotes = self.vue.images[index].upvotes + 1;
+            if (self.vue.ratings[index].downvote == true) {
+                self.vue.images[index].downvotes = self.vue.images[index].downvotes + 1;
                 }
         }
         else {

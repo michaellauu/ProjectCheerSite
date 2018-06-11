@@ -73,6 +73,8 @@
                             <button v-if="check_upvote(image._idx)" v-on:click="toggle_upvote(image._idx)" class="right rounded green button_css"> <i class="fa fa-angle-double-up fa-lg"></i></button>
                             <button v-if="!check_upvote(image._idx)" v-on:click="toggle_upvote(image._idx)" class="right rounded gray button_css"> <i class="fa fa-angle-double-up fa-lg"></i></button>
                         </ul>
+                        <p class="ratingnumbera" style="float:right; margin-left: 10px;">${image.upvotes} likes </p>
+                        <p class="ratingnumberb" style="float:right; margin-left: 10px;">${image.downvotes} dislikes</p>
                   </li>
                 </ul>
 
