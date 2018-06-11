@@ -91,13 +91,15 @@
                             <button v-if="check_upvote(image._idx)" v-on:click="toggle_upvote(image._idx)" class="right rounded green button_css"> <i class="fa fa-angle-double-up fa-lg"></i></button>
                             <button v-if="!check_upvote(image._idx)" v-on:click="toggle_upvote(image._idx)" class="right rounded gray button_css"> <i class="fa fa-angle-double-up fa-lg"></i></button>
                         </ul>
+                        <p class="ratingnumbera" style="float:right; margin-left: 10px;">${image.upvotes} likes </p>
+                        <p class="ratingnumberb" style="float:right; margin-left: 10px;">${image.downvotes} dislikes</p>
                     </li>
                 </ul>
                 <h6 v-if="self_page" >Favorited Images</h6>
                 <ul v-if="self_page" class="container">
                     <li v-for="image in ratings"  v-if="image.favorited" class="card padded quarter image_container_css">
                         <img v-bind:src="image.image_url" height="200px" width="200px" class="padded"/>
-                        <ul class="buttons">
+                        <ul class="buttonsfav" style="float:bottom; margin-right: 145px;">
                             <button v-if="!image.favorited" class="right rounded gray button_css" v-on:click="toggle_pfavorite(image._idx)"> <i class="fa fa-heart-o"></i></button>
                             <button v-if="image.favorited" class="right rounded fuchsia button_css" v-on:click="toggle_pfavorite(image._idx)"> <i class="fa fa-heart"></i></button>
                         </ul>
