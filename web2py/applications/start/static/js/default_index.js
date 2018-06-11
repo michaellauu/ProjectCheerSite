@@ -262,7 +262,8 @@ var app = function() {
         if (exist){
             $.post(toggle_up_url,
                 {
-                    image_id: img_id
+                    image_id: img_id,
+                    user_id: self.vue.self_id
                 })
         }
         else {
@@ -294,7 +295,8 @@ var app = function() {
         if (exist){
             $.post(toggle_down_url,
                 {
-                    image_id: img_id
+                    image_id: img_id,
+                    user_id: self.vue.self_id
                 })
         }
         else {
