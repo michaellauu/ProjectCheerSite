@@ -251,7 +251,6 @@ var app = function() {
         var exist = false;
         var img_id= 0;
         var current_id = self.vue.images[index].id;
-
         for(i = 0; i < self.vue.ratings.length; i++) {
             if(current_id == self.vue.ratings[i].image_id) {
                 exist = true;
@@ -260,6 +259,9 @@ var app = function() {
             }
         }
         if (exist){
+            if (self.vue.ratings[index].upvote == true && self.vue.ratings[index].downvote == true) {
+                self.vue.ratings[index].downvote == false;
+            }
             $.post(toggle_up_url,
                 {
                     image_id: img_id,
@@ -267,11 +269,11 @@ var app = function() {
                     id: self.vue.images[index].id,
                     upvote: self.vue.ratings[index].upvote,
                 })
-            if(self.vue.ratings[index].upvote == False) {
-                self.vue.images[index].upvotes = self.vue.images[index].upvotes - 1
+            if(self.vue.ratings[index].upvote == false) {
+                self.vue.images[index].upvotes = self.vue.images[index].upvotes - 1;
                 }
-            if (self.vue.ratings[index].upvote == True) {
-                self.vue.images[index].upvotes = self.vue.images[index].upvotes + 1
+            if (self.vue.ratings[index].upvote == true) {
+                self.vue.images[index].upvotes = self.vue.images[index].upvotes + 1;
                 }
         }
         else {
@@ -285,7 +287,7 @@ var app = function() {
                     self.vue.ratings.push(data.upvote_data);
                     enumerate(self.vue.ratings);
                 })
-            self.vue.images[index].upvotes = self.vue.images[index].upvotes + 1
+            self.vue.images[index].upvotes = self.vue.images[index].upvotes + 1;
         }
     };
 
@@ -293,7 +295,6 @@ var app = function() {
         var exist = false;
         var img_id= 0;
         var current_id = self.vue.images[index].id;
-
         for(i = 0; i < self.vue.ratings.length; i++) {
             if(current_id == self.vue.ratings[i].image_id) {
                 exist = true;
@@ -302,6 +303,9 @@ var app = function() {
             }
         }
         if (exist){
+            if (self.vue.ratings[index].upvote == true && self.vue.ratings[index].downvote == false) {
+                self.vue.ratings[index].upvote == false;
+            }
             $.post(toggle_down_url,
                 {
                     image_id: img_id,
@@ -309,11 +313,11 @@ var app = function() {
                     id: self.vue.images[index].id,
                     downvote: self.vue.ratings[index].downvote,
                 })
-            if(self.vue.ratings[index].upvote == False) {
-                self.vue.images[index].upvotes = self.vue.images[index].upvotes - 1
+            if(self.vue.ratings[index].upvote == false) {
+                self.vue.images[index].upvotes = self.vue.images[index].upvotes - 1;
                 }
-            if (self.vue.ratings[index].upvote == True) {
-                self.vue.images[index].upvotes = self.vue.images[index].upvotes + 1
+            if (self.vue.ratings[index].upvote == true) {
+                self.vue.images[index].upvotes = self.vue.images[index].upvotes + 1;
                 }
         }
         else {
@@ -327,7 +331,7 @@ var app = function() {
                     self.vue.ratings.push(data.downvote_data);
                     enumerate(self.vue.ratings);
                 })
-            self.vue.images[index].downvotes = self.vue.images[index].downvotes + 1
+            self.vue.images[index].downvotes = self.vue.images[index].downvotes + 1;
         }
     };
 
