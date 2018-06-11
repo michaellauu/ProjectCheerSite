@@ -260,7 +260,7 @@ var app = function() {
         }
         if (exist){
             if (self.vue.ratings[index].upvote == true && self.vue.ratings[index].downvote == true) {
-                self.vue.ratings[index].downvote == false;
+                self.vue.ratings[index].downvote = false;
             }
             $.post(toggle_up_url,
                 {
@@ -303,8 +303,8 @@ var app = function() {
             }
         }
         if (exist){
-            if (self.vue.ratings[index].upvote == true && self.vue.ratings[index].downvote == false) {
-                self.vue.ratings[index].upvote == false;
+            if (self.vue.ratings[index].upvote == true && self.vue.ratings[index].downvote == true) {
+                self.vue.ratings[index].upvote = false;
             }
             $.post(toggle_down_url,
                 {
@@ -345,6 +345,10 @@ var app = function() {
         self.vue.self_page = !self.vue.self_page;
         if (self.vue.self_page) {
             self.get_profile_images(self.vue.user_id);
+        }
+        else {
+            self.vue.self_page = false;
+            self.get_images(self.vue.user_id, self.vue.current_page);
         }
     }
 
