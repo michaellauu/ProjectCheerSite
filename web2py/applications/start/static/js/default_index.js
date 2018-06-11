@@ -101,6 +101,34 @@ var app = function() {
         })
     };
 
+    function get_profile_image_url(current_id) {
+        var pp = {
+            current_id: current_id
+        }
+        return profile_images_url + "?" + $.param(pp);
+    }
+
+    self.get_profile_images = function(cuser){
+        $.getJSON(get_profile_image_url(cuser), function(data) {
+            console.log(data)
+            self.vue.images = data.images;
+            self.vue.ratings = data.ratings;
+            self.vue.self_id = data.user_id;
+            self.vue.logged_in = data.logged_in;
+            if (data.user_id == 0) {
+                self.vue.self_page = false;
+                if (self.vue.users.length > 0) {
+                    self.vue.user_id = self.vue.users[0].id;
+                }
+            }
+            else {
+                self.vue.user_id = data.user_id;
+            }
+            enumerate(self.vue.images);
+            enumerate(self.vue.ratings);
+        })
+    };
+
     self.select_user = function(id) {
         self.vue.user_id = id;
         self.vue.self_page = (id == self.vue.self_id);
@@ -134,10 +162,27 @@ var app = function() {
             id: self.vue.images[index].id
         },
         function() {
+            var rmid = self.vue.images[index].id;
             self.vue.images.splice(index, 1);
             enumerate(self.vue.images);
+            for(var i = 0; i < self.vue.ratings.length; i++) {
+                if (self.vue.ratings[i].image_id == rmid) {
+                    self.vue.ratings.splice(i, 1);
+                }
+            }
+            enumerate(self.vue.ratings);
         })
     };
+
+    self.toggle_pfavorite = function(index) {
+        self.vue.ratings[index].favorited = !self.vue.ratings[index].favorited;
+        $.post(toggle_fav_url,
+            {
+                image_id: self.vue.ratings[index].image_id,
+                user_id: self.vue.self_id
+            })
+
+    }
 
     self.toggle_favorite = function(index) {
         var exist = false;
@@ -273,7 +318,10 @@ var app = function() {
     }
 
     self.profile_page = function() {
-        self.vue.self_page = true;
+        self.vue.self_page = !self.vue.self_page;
+        if (self.vue.self_page) {
+            self.get_profile_images(self.vue.user_id);
+        }
     }
 
     self.vue = new Vue({
@@ -304,7 +352,8 @@ var app = function() {
             toggle_upvote: self.toggle_upvote,
             toggle_downvote: self.toggle_downvote,
             select_page: self.select_page,
-            profile_page: self.profile_page
+            profile_page: self.profile_page,
+            toggle_pfavorite: self.toggle_pfavorite
         }
 
     });

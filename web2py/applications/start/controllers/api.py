@@ -17,7 +17,7 @@ def add_image():
         category = i.category
     )))
 
-def get_imagesd():
+def get_profile_images():
     current_id = int(request.vars.current_id) if request.vars.current_id is not None else 0
     images = []
     ratings = []
@@ -35,6 +35,7 @@ def get_imagesd():
             )
             ratings.append(ra)
     for r in img:
+        print r.created_by == current_id
         if r.created_by == current_id:
             t = dict(
                 id = r.id,
@@ -49,8 +50,10 @@ def get_imagesd():
         user_id = auth.user_id
     else:
         user_id = 0
+    logged_in = auth.user is not None
     return response.json(dict(
         images = images,
+        logged_in = logged_in,
         ratings = ratings,
         user_id = user_id,
     ))
@@ -85,6 +88,7 @@ def get_user():
 @auth.requires_signature()
 def del_image():
     db(db.user_images.id == request.vars.id).delete()
+    db(db.ratings.image_id == request.vars.id).delete()
     return "done"
 
 @auth.requires_signature()
