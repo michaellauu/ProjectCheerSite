@@ -96,6 +96,9 @@ var app = function() {
             else {
                 self.vue.user_id = data.user_id;
             }
+            if(self.vue.logged_in == false) {
+                self.vue.ratings = [];
+            }
             enumerate(self.vue.images);
             enumerate(self.vue.ratings);
         })
@@ -185,6 +188,9 @@ var app = function() {
     }
 
     self.toggle_favorite = function(index) {
+        if (self.vue.logged_in == false) {
+            return 0;
+        }
         var exist = false;
         var img_id= 0;
         var current_id = self.vue.images[index].id;
@@ -248,6 +254,9 @@ var app = function() {
     }
 
     self.toggle_upvote = function(index) {
+        if (self.vue.logged_in == false) {
+            return 0;
+        }
         var exist = false;
         var img_id= 0;
         var current_id = self.vue.images[index].id;
@@ -293,6 +302,9 @@ var app = function() {
     };
 
     self.toggle_downvote = function(index) {
+        if (self.vue.logged_in == false) {
+            return 0;
+        }
         var exist = false;
         var img_id= 0;
         var current_id = self.vue.images[index].id;
