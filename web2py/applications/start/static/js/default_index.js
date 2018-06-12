@@ -366,6 +366,18 @@ var app = function() {
         }
     }
 
+    self.toggle_commenting = function() {
+        self.vue.commenting = !self.vue.commenting;
+    }
+
+    self.add_comment = function () {
+        self.vue.commenting = false;
+    }
+
+    self.toggle_fullWidthImage = function () {
+        self.vue.fullWidthImage = !self.vue.fullWidthImage
+    }
+
     self.vue = new Vue({
         el: "#vue-div",
         delimiters: ['${', '}'],
@@ -379,7 +391,10 @@ var app = function() {
             user_id: 0,
             self_id: 0,
             current_page: 'ALL',
-            logged_in: false
+            logged_in: false,
+            fullWidthImage: false,
+            comment_box: null,
+            commenting: false,
         },
         methods: {
             open_uploader: self.open_uploader,
@@ -395,7 +410,10 @@ var app = function() {
             toggle_downvote: self.toggle_downvote,
             select_page: self.select_page,
             profile_page: self.profile_page,
-            toggle_pfavorite: self.toggle_pfavorite
+            toggle_pfavorite: self.toggle_pfavorite,
+            toggle_commenting: self.toggle_commenting,
+            add_comment: self.add_comment,
+            toggle_fullWidthImage: self.toggle_fullWidthImage,
         }
 
     });

@@ -11,65 +11,68 @@ p5
 I3
 sS'raw_rname'
 p6
-g1
-sS'notnull'
+S'group_id'
 p7
+sS'notnull'
+p8
 I00
 sS'length'
-p8
+p9
 I512
 sS'sql'
-p9
-S'INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  '
 p10
-sS'unique'
+S'INTEGER REFERENCES "auth_group" ("id") ON DELETE CASCADE  '
 p11
+sS'unique'
+p12
 I00
 sS'type'
-p12
-S'reference auth_group'
 p13
-ssS'user_id'
+S'reference auth_group'
 p14
-(dp15
+ssS'user_id'
+p15
+(dp16
 g3
 S'"user_id"'
-p16
+p17
 sg5
 I2
 sg6
-g14
-sg7
-I00
-sg8
-I512
-sg9
-S'INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  '
-p17
-sg11
-I00
-sg12
-S'reference auth_user'
+S'user_id'
 p18
-ssS'id'
+sg8
+I00
+sg9
+I512
+sg10
+S'INTEGER REFERENCES "auth_user" ("id") ON DELETE CASCADE  '
 p19
-(dp20
+sg12
+I00
+sg13
+S'reference auth_user'
+p20
+ssS'id'
+p21
+(dp22
 g3
 S'"id"'
-p21
+p23
 sg5
 I1
 sg6
-g19
-sg7
-I00
+S'id'
+p24
 sg8
-I512
-sg9
-S'INTEGER PRIMARY KEY AUTOINCREMENT'
-p22
-sg11
 I00
+sg9
+I512
+sg10
+S'INTEGER PRIMARY KEY AUTOINCREMENT'
+p25
 sg12
-g19
+I00
+sg13
+g24
 ss.

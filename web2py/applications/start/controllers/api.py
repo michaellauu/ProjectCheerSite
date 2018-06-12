@@ -104,7 +104,6 @@ def toggle_favorite():
 def toggle_upvote():
     image_id = int(request.vars.image_id) if request.vars.image_id is not None else 0
     u = db(db.ratings.user_id == request.vars.user_id).select()
-    status = bool(request.vars.upvote)
     work = db.user_images(request.vars.id)
     for i in u:
         if i.image_id == image_id:
@@ -112,18 +111,16 @@ def toggle_upvote():
             if (i.upvote is True and i.downvote is True):
                 i.update_record(downvote = not i.downvote)
                 work.update_record(downvotes=work.downvotes - 1)
-
-    if status is False:
-        work.update_record(upvotes=work.upvotes-1)
-    if status is True:
-        work.update_record(upvotes = work.upvotes+1)
+            if (i.upvote is True):
+                work.update_record(upvotes=work.upvotes + 1)
+            if (i.upvote is False):
+                work.update_record(upvotes=work.upvotes - 1)
     return "done"
 
 @auth.requires_signature()
 def toggle_downvote():
     image_id = int(request.vars.image_id) if request.vars.image_id is not None else 0
     u = db(db.ratings.user_id == request.vars.user_id).select()
-    status = bool(request.vars.downvote)
     work = db.user_images(request.vars.id)
     for i in u:
         if i.image_id == image_id:
@@ -131,10 +128,10 @@ def toggle_downvote():
         if (i.upvote is True and i.downvote is True):
             i.update_record(upvote = not i.upvote)
             work.update_record(upvotes=work.upvotes - 1)
-    if status is False:
-        work.update_record(downvotes = work.downvotes-1)
-    if status is True:
-        work.update_record(downvotes = work.downvotes+1)
+        if (i.downvote is True):
+            work.update_record(downvotes=work.downvotes + 1)
+        if (i.upvote is False):
+            work.update_record(downvotes=work.downvotes - 1)
     return "done"
 
 @auth.requires_signature()

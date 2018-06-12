@@ -28,7 +28,8 @@
                 <a v-if="logged_in && !self_page" class="btn right purple rounded profile_css" v-on:click="profile_page">Your Profile</a>
                 <a v-if="logged_in && self_page" class="btn right purple rounded profile_css" v-on:click="profile_page">Back to Animals</a>
                 <h6 v-if="!self_page && logged_in" class= "padded">Pick a category besides "All Animals" to upload an image into that category</h6>
-                <h6 v-if="!logged_in" class="padded">Log in to upload images</h6>                
+                <h6 v-if="!logged_in" class="padded">Log in to upload images</h6>
+                <h7 class="subtext">Click an image to full size them all.</h7>
             </div>  
 
             <div v-if="logged_in && !(current_page == 'ALL') && !self_page">
@@ -62,9 +63,8 @@
                 <!-- Put here the code to display the images -->
                 <ul v-if="!self_page" class="container">
                     <li v-for="image in images" class="card padded quarter image_container_css">
-                        <img v-bind:src="image.image_url" height="200px" width="200px" class="padded"/>
+                        <img :class="{full: fullWidthImage}" @click="fullWidthImage = !fullWidthImage" v-bind:src="image.image_url" height="220px" width="auto" class="padded"/>
                         <ul class="buttons">
-                            <button v-if="self_id == image.created_by" class="right rounded orange" v-on:click="delete_images(image._idx)"> <i class="fa fa-trash"></i></button>
                             <button v-if="!check_favorite(image._idx)" class="right rounded gray button_css" v-on:click="toggle_favorite(image._idx)"> <i class="fa fa-heart-o"></i></button>
                             <button v-if="check_favorite(image._idx)" class="right rounded fuchsia button_css" v-on:click="toggle_favorite(image._idx)"> <i class="fa fa-heart"></i></button>
                             <button v-if="!check_downvote(image._idx)" v-on:click="toggle_downvote(image._idx)" class="right rounded gray button_css"> <i class="fa fa-angle-double-down fa-lg"></i></button>
@@ -72,15 +72,18 @@
                             <button v-if="check_upvote(image._idx)" v-on:click="toggle_upvote(image._idx)" class="right rounded green button_css"> <i class="fa fa-angle-double-up fa-lg"></i></button>
                             <button v-if="!check_upvote(image._idx)" v-on:click="toggle_upvote(image._idx)" class="right rounded gray button_css"> <i class="fa fa-angle-double-up fa-lg"></i></button>
                         </ul>
-                        <p class="ratingnumbera" style="float:right; margin-left: 10px;">${image.upvotes} likes </p>
                         <p class="ratingnumberb" style="float:right; margin-left: 10px;">${image.downvotes} dislikes</p>
+                        <p class="ratingnumbera" style="float:right; margin-left: 10px;">${image.upvotes} likes </p>
+                        <p class="comments" style="float:right; margin-right: -5px;" v-on:click="toggle_commenting()"></br>Comments</p>
+                        <textarea v-if="commenting" placeholder="Leave a comment" type="text"></textarea>
+                        <button class="fa fa-check" v-if="commenting" v-on:click="add_comment()" style="float:right; font-size:.75em;"></button>
                   </li>
                 </ul>
 
                 <h6 v-if="self_page" >Your uploaded images</h6>
                 <ul v-if="self_page" class="container">
                     <li v-for="image in images" class="card padded quarter image_container_css">
-                        <img v-bind:src="image.image_url" height="200px" width="200px" class="padded"/>
+                        <img :class="{full: fullWidthImage}" @click="fullWidthImage = !fullWidthImage" v-bind:src="image.image_url" height="220px" width="auto" class="padded"/>
                         <ul class="buttons">
                             <button v-if="self_id == image.created_by" class="right rounded orange" v-on:click="delete_images(image._idx)"> <i class="fa fa-trash"></i></button>
                             <button v-if="!check_favorite(image._idx)" class="right rounded gray button_css" v-on:click="toggle_favorite(image._idx)"> <i class="fa fa-heart-o"></i></button>
@@ -90,18 +93,24 @@
                             <button v-if="check_upvote(image._idx)" v-on:click="toggle_upvote(image._idx)" class="right rounded green button_css"> <i class="fa fa-angle-double-up fa-lg"></i></button>
                             <button v-if="!check_upvote(image._idx)" v-on:click="toggle_upvote(image._idx)" class="right rounded gray button_css"> <i class="fa fa-angle-double-up fa-lg"></i></button>
                         </ul>
-                        <p class="ratingnumbera" style="float:right; margin-left: 10px;">${image.upvotes} likes </p>
                         <p class="ratingnumberb" style="float:right; margin-left: 10px;">${image.downvotes} dislikes</p>
+                        <p class="ratingnumbera" style="float:right; margin-left: 10px;">${image.upvotes} likes </p>
+                        <p class="comments" style="float:right; margin-right: -5px;" v-on:click="toggle_commenting()"></br>Comments</p>
+                        <textarea v-if="commenting" placeholder="Leave a comment" type="text"></textarea>
+                        <button class="fa fa-check" v-if="commenting" v-on:click="add_comment()" style="float:right; font-size:.75em;"></button>
                     </li>
                 </ul>
                 <h6 v-if="self_page" >Favorited Images</h6>
                 <ul v-if="self_page" class="container">
                     <li v-for="image in ratings"  v-if="image.favorited" class="card padded quarter image_container_css">
-                        <img v-bind:src="image.image_url" height="200px" width="200px" class="padded"/>
-                        <ul class="buttonsfav" style="float:bottom; margin-right: 145px;">
+                        <img :class="{full: fullWidthImage}" @click="fullWidthImage = !fullWidthImage" v-bind:src="image.image_url" height="220px" width="auto" class="padded"/>
+                        <ul class="buttonsfav" style="float:left;">
                             <button v-if="!image.favorited" class="right rounded gray button_css" v-on:click="toggle_pfavorite(image._idx)"> <i class="fa fa-heart-o"></i></button>
                             <button v-if="image.favorited" class="right rounded fuchsia button_css" v-on:click="toggle_pfavorite(image._idx)"> <i class="fa fa-heart"></i></button>
                         </ul>
+                            <p class="comments" style="float:right;" v-on:click="toggle_commenting()"></br></br>Comments</p>
+                            <textarea v-if="commenting" placeholder="Leave a comment" type="text"></textarea>
+                            <button class="fa fa-check" v-if="commenting" v-on:click="add_comment()" style="float:right; font-size:.75em;"></button>
                     </li>
                 </ul>
             </div>
