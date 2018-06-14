@@ -17,20 +17,12 @@ def index():
     if you need a simple wiki simply replace the two lines below with:
     return auth.wiki()
     """
-    response.flash = T("Home page")
+    #response.flash = T("Home page")
     return dict(message=T('This is the home page'))
 
 def animal_select():
-    response.flash = T("Animal select page")
+    #response.flash = T("Animal select page")
     return dict(message=T("This is for selecting what type of animal"))
-
-def cute_animals():
-    response.flash = T("Cute animal page")
-    return dict(message=T("This is the page that will have cute animals"))
-
-def ugly_animals():
-    response.flash = T("Ugly animal page")
-    return dict(message=T("This is the page that will have ugle/unique animals"))
 
 def user():
     """
